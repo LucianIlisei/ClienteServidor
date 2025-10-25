@@ -37,10 +37,26 @@ public class ConexionServidor {
 			salida = new PrintWriter(new OutputStreamWriter(conexion.getOutputStream()));
 			
 			while(true) {
-				
+				String mensajeCliente = entrada.readLine();
+				System.out.println("Cliente: " + mensajeCliente);
+				salida.println(mensajeCliente);
+				salida.flush();
+				if(mensajeCliente.equals("BYE")) {
+					break;
+				}
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
+		} finally {
+			salida.close();
+			try {
+				entrada.close();
+				conexion.close();
+				servidor.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			
 		}
 		
 	}
